@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+ 
+    <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+    <meta name="robots" content="noindex,follow" />
+  </head>
+  <body>
+    <div class="shopping-cart" style="height: 525px;">
+      <!-- Title -->
+       <div class="title">
+        Shopping Cart
+       </div>
+
+      <!-- Product #1 -->
+      <div class="item">
+        <div class="buttons">
+          <span class="delete-btn"></span>
+          <span class="like-btn"></span>
+        </div>
+
+        <div class="image">
+          <img src="luffy.png" alt="" style="width: 120px;height: 80px;"/>
+        </div>
+
+        <div class="description">
+          <span>One Piece</span>
+          <span>Luffy</span>
+          
+        </div>
+
+        <div class="quantity">
+          <button class="plus-btn" type="button" name="button">
+            <img src="plus.svg" alt="" />
+          </button>
+          
+          <input class="cart-quantity-input" type="text" name="name" value="1" oninput="  updateCartTotal()">
+          <button class="minus-btn" type="button" name="button">
+            <img src="minus.svg" alt="" />
+          </button>
+        </div>
+
+        <div class="price">$40</div>
+      </div>
+
+      <!-- Product #2 -->
+      <div class="item">
+        <div class="buttons">
+          <span class="delete-btn"></span>
+          <span class="like-btn"></span>
+        </div>
+
+        <div class="image">
+          <img src="guy.png" alt="" style="width: 120px;height: 80px;"/>
+        </div>
+
+        <div class="description">
+          <span>Night Guy</span>
+          <span>eight gates</span>
+        </div>
+
+        <div class="quantity">
+          <button class="plus-btn" type="button" name="button">
+            <img src="plus.svg" alt="" />
+          </button>
+          <input class="cart-quantity-input" type="text" name="name" value="1" oninput="  updateCartTotal()">
+          <button class="minus-btn" type="button" name="button">
+            <img src="minus.svg" alt="" />
+          </button>
+        </div>
+
+        <div class="price">$45</div>
+      </div>
+
+      <!-- Product #3 -->
+      <div class="item">
+        <div class="buttons">
+          <span class="delete-btn"></span>
+          <span class="like-btn"></span>
+        </div>
+
+        <div class="image">
+          <img src="killua.png" alt="" style="width: 120px;height: 80px;"/>
+        </div>
+
+        <div class="description">
+          <span>HXH</span>
+          <span>Killua zoldic</span>
+        </div>
+
+        <div class="quantity">
+          <button class="plus-btn" type="button" name="button">
+            <img src="plus.svg" alt="" />
+          </button>
+          <input class="cart-quantity-input" type="text" name="name" value="1" oninput="  updateCartTotal()">
+          <button class="minus-btn" type="button" name="button">
+            <img src="minus.svg" alt="" />
+          </button>
+        </div>
+
+        <div class="price">$50</div>
+      </div>
+
+      <div class="PTotale">
+        Total Price
+      
+     <span class="total-cart">$135</span>
+    </div>
+  </div>
+
+
+  
+      
+
+
+
+
+
+
+
+    <script type="text/javascript">
+
+
+
+
+
+      $('.minus-btn').on('click', function(e) {
+    		e.preventDefault();
+    		var $this = $(this);
+    		var $input = $this.closest('div').find('input');
+    		var value = parseInt($input.val());
+
+    		if (value > 1) {
+    			value = value - 1;
+    		} else {
+    			value = 0;
+    		}
+
+        $input.val(value);
+        updateCartTotal()
+    	});
+
+    	$('.plus-btn').on('click', function(e) {
+    		e.preventDefault();
+    		var $this = $(this);
+    		var $input = $this.closest('div').find('input');
+    		var value = parseInt($input.val());
+
+    		if (value < 100) {
+      		value = value + 1;
+    		} else {
+    			value =100;
+    		}
+
+    		$input.val(value);
+        updateCartTotal()
+    	});
+
+      $('.like-btn').on('click', function() {
+        $(this).toggleClass('is-active');
+      });
+
+      var removeCartButt = document.getElementsByClassName('delete-btn')
+      //console.log(removeCartButt)
+      for(var i=0;i<removeCartButt.length;i++){
+        var button=removeCartButt[i]
+        button.addEventListener('click', function(event) {
+         var buttonClicked = event.target
+         buttonClicked.parentElement.parentElement.remove()
+         updateCartTotal()
+        })
+      }
+
+
+
+      function updateCartTotal(){
+        var CartItemContainer = document.getElementsByClassName('shopping-cart')[0]
+        var cartItems = CartItemContainer.getElementsByClassName('item')
+        var Total=0
+
+        for(var i=0;i<cartItems.length;i++){
+        var cartItem= cartItems[i]
+        var priceItem = cartItem.getElementsByClassName('price')[0]
+        var quantityElem= cartItem.getElementsByClassName('cart-quantity-input')[0]
+        
+       
+        var price = parseInt(priceItem.innerText.replace('$','' ))
+        var quantity = quantityElem.value
+        Total = Total + (price * quantity)
+      
+        }
+        document.getElementsByClassName('total-cart')[0].innerText ="$" +  Total
+      }
+    </script>
+  </body>
+</html>
